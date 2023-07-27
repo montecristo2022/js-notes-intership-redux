@@ -3,9 +3,7 @@ import { MdClose } from "react-icons/md";
 import { deleteTask, toggleCompleted } from "../../redux/tasksSlice";
 import css from "./Task.module.css";
 
-
 export const Task = ({ task }) => {
-  console.log(task.dates)
   const dispatch = useDispatch();
 
   const handleDelete = () => dispatch(deleteTask(task.id));
@@ -22,11 +20,10 @@ export const Task = ({ task }) => {
       />
       <p className={css.category}>{task.category}</p>
       <p className={css.text}>{task.text}</p>
-      <p>Created time: {task.createdTime}</p>
-
       {task.dates?.length > 0 && (
-        <p>Mentioned dates: {task.dates.join(', ')}</p>
+        <p>Mentioned dates: {task.dates.join(", ")}</p>
       )}
+      <p>Created time: {task.createdTime}</p>
 
       <button className={css.btn} onClick={handleDelete}>
         <MdClose size={24} />
@@ -34,10 +31,6 @@ export const Task = ({ task }) => {
     </div>
   );
 };
-
-
-
-
 
 // export const Task = ({ task }) => {
 //   const dispatch = useDispatch();
@@ -63,4 +56,3 @@ export const Task = ({ task }) => {
 //     </div>
 //   );
 // };
-

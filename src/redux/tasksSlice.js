@@ -35,26 +35,28 @@ const tasksSlice = createSlice({
   name: "tasks",
   initialState: tasksInitialState,
   reducers: {
-    addTask: {
-      reducer(state, action) {
-        state.push(action.payload);
+addTask: {
+  reducer(state, action) {
+    state.push(action.payload);
+  },
+  prepare({ text, category, dates }) {
+    const currentDate = new Date();
+    const formattedDate = `${
+      currentDate.getMonth() + 1
+    }/${currentDate.getDate()}/${currentDate.getFullYear()}`;
+    return {
+      payload: {
+        id: nanoid(),
+        text,
+        category,
+        dates,
+        completed: false,
+        createdTime: formattedDate,
       },
-      prepare({ text, category }) {
-        const currentDate = new Date();
-        const formattedDate = `${
-          currentDate.getMonth() + 1
-        }/${currentDate.getDate()}/${currentDate.getFullYear()}`;
-        return {
-          payload: {
-            id: nanoid(),
-            text,
-            category,
-            completed: false,
-            createdTime: formattedDate,
-          },
-        };
-      },
-    },
+    };
+  },
+},
+
     deleteTask(state, action) {
       const index = state.findIndex((task) => task.id === action.payload);
       state.splice(index, 1);
