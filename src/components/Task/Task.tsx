@@ -1,16 +1,28 @@
-import { MdEdit, MdDone } from "react-icons/md";
+import { MdEdit, MdDone, MdClose } from "react-icons/md";
 import { useDispatch } from "react-redux";
-import { MdClose } from "react-icons/md";
 import { deleteTask, toggleCompleted, editTask } from "../../redux/tasksSlice";
 import css from "./Task.module.css";
-import { useState } from 'react';
+import { useState } from "react";
 
-export const Task = ({ task }) => {
+interface Task {
+  id: any;
+  text: string;
+  completed: boolean;
+  createdTime: string;
+  category: string;
+  dates: string[];
+}
+
+interface TaskProps {
+  task: Task;
+}
+
+const Task: React.FC<TaskProps> = ({ task }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(task.text);
   const dispatch = useDispatch();
 
-  const handleTextChange = (event) => {
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNewText(event.target.value);
   };
 
@@ -38,7 +50,11 @@ export const Task = ({ task }) => {
       {isEditing && <MdDone size={24} onClick={handleDoneClick} />}
       <p className={css.category}>{task.category}</p>
       {isEditing ? (
-        <input className={css.input} value={newText} onChange={handleTextChange} />
+        <input
+          className={css.input}
+          value={newText}
+          onChange={handleTextChange}
+        />
       ) : (
         <p className={css.text}>{task.text}</p>
       )}
@@ -52,3 +68,5 @@ export const Task = ({ task }) => {
     </div>
   );
 };
+
+export default Task;

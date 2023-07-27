@@ -7,9 +7,10 @@ import css from "./StatusFilter.module.css";
 
 export const StatusFilter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(getStatusFilter);
+  const filter: string = useSelector(getStatusFilter);
 
-  const handleFilterChange = filter => dispatch(setStatusFilter(filter));
+  const handleFilterChange = (filter: string) =>
+    dispatch(setStatusFilter(filter));
 
   return (
     <div className={css.wrapper}>
