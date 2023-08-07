@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import Task from "../Task/Task";
 import { getTasks, getStatusFilter } from "../../redux/selectors";
 import { statusFilters } from "../../redux/constants";
-import css from "./TaskList.module.css";
 
 type TaskType = {
   id: string;
@@ -30,9 +29,12 @@ export const TaskList = () => {
   const visibleTasks: TaskType[] = getVisibleTasks(tasks, statusFilter);
 
   return (
-    <ul className={css.list}>
-      {visibleTasks.map((task) => (
-        <li className={css.listItem} key={task.id}>
+    <ul className="m-0 p-0 list-none">
+      {visibleTasks.map((task, index) => (
+        <li
+          className={`${index !== 0 ? "border-t border-gray-700" : ""}`}
+          key={task.id}
+        >
           <Task task={task} />
         </li>
       ))}

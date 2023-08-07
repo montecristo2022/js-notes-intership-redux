@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { getTasks } from "../../redux/selectors";
-import css from "./TaskCounter.module.css";
 
 type TaskType = {
   category: string;
@@ -31,12 +30,18 @@ export const TaskCounter = () => {
   }, {});
 
   return (
-    <div className={css.table}>
+    <div className="grid grid-cols-3 gap-5 text-lg mb-5">
       {Object.entries(count).map(([category, { active, completed }]) => (
         <ul key={category}>
-          <li className={css.cell}>{category}</li>
-          <li className={css.cell}>Active: {active}</li>
-          <li className={css.cell}>Archived: {completed}</li>
+          <li className="flex justify-center items-center border border-gray-300 p-2.5">
+            <p>{category}</p>
+          </li>
+          <li className="flex justify-center items-center border border-gray-300 p-2.5">
+            <p>Active: {active}</p>
+          </li>
+          <li className="flex justify-center items-center border border-gray-300 p-2.5">
+            <p>Archived: {completed}</p>
+          </li>
         </ul>
       ))}
     </div>

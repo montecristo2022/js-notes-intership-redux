@@ -1,7 +1,7 @@
+import Notiflix from "notiflix";
 import { useDispatch } from "react-redux";
 import { Button } from "../Button/Button";
 import { addTask } from "../../redux/tasksSlice";
-import css from "./TaskForm.module.css";
 import { FormEvent } from "react";
 
 interface TaskData {
@@ -16,7 +16,20 @@ export const TaskForm: React.FC = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const text = (form.elements.namedItem("text") as HTMLInputElement).value;
+    const text = (
+      form.elements.namedItem("text") as HTMLInputElement
+    ).value.trim();
+
+    if (text === "") {
+      Notiflix.Notify.failure("Your note can not be empty!", {
+        timeout: 2500,
+      });
+      return;
+    } else {
+      Notiflix.Notify.success("Your note was added", {
+        timeout: 2500,
+      });
+    }
 
     const regex = /\d{1,2}[./]\d{1,2}[./]\d{2,4}/g;
     const dates = text.match(regex);
@@ -33,17 +46,21 @@ export const TaskForm: React.FC = () => {
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit}>
+    <form className="flex gap-4" onSubmit={handleSubmit}>
       <input
-        className={css.field}
+        className="flex-grow p-2  font-inherit border border-black-300 focus:outline-blue-600"
         type="text"
         name="text"
         placeholder="Add note text..."
       />
-      <select name="category">
-        <option>Idea</option>
-        <option>Task</option>
-        <option>Random Thought</option>
+
+      <select
+        className="w-48 p-2.5 bg-f8f8f8 border rounded-md border-gray-300 focus:outline-none"
+        name="category"
+      >
+        <option className="bg-white">Idea</option>
+        <option className="bg-white">Task</option>
+        <option className="bg-white">Random Thought</option>
       </select>
       <Button type="submit">Add task</Button>
     </form>
